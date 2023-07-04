@@ -22,18 +22,6 @@ The Spy Game is a party game where players take on the roles of spies and other 
 
 4. Game End: The game ends once the Spy is revealed and the outcome is determined.
 
-## Code Implementation
-
-The code in this repository provides a basic implementation of the Spy Game in Kotlin. It includes the following components:
-
-- Player class: Represents a player with a name, role, and assigned place.
-- Role enum: Defines the possible roles (Spy or Place).
-- assignRolesAndPlaces() function: Randomly assigns roles and places to the players.
-- playSpyGame() function: Implements the game logic.
-
 Feel free to explore the code and modify it as needed for your own implementation.
 
-## Usage
-
-To run the Spy Game, you can clone this repository and run the code using a Kotlin compiler or an integrated development environment (IDE) that supports Kotlin.
 
