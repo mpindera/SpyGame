@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.gamespy.ui.theme.darkGray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,21 +48,17 @@ fun StartScreen(
             mutableStateOf(false)
         }
 
-        var selectedOptionStateValue by remember {
-            mutableStateOf(options[0])
-        }
-
         Box(modifier = Modifier.padding(16.dp)) {
             Column {
                 Button(
                     onClick = { isDropdownOpen = !isDropdownOpen },
                     modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(Color(0x604D4444))
+                    colors = ButtonDefaults.buttonColors(darkGray)
                 ) {
                     Text(
                         color = Color.Black,
                         fontSize = 20.sp,
-                        text = selectedOption.takeUnless { it.isEmpty() } ?: "Select an option")
+                        text = selectedOption.takeUnless { it.isEmpty() } ?: "Select number")
                 }
 
                 DropdownMenu(

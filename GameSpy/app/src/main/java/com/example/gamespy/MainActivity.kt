@@ -26,7 +26,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
-
                     val navController = rememberNavController()
                     NavigationAppHost(navController)
 
@@ -38,6 +37,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun NavigationAppHost(navController: NavHostController) {
+
     val selectedOptionState = remember {
         mutableStateOf("")
     }
