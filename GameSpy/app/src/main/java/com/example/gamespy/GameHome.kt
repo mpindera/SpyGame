@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,7 +44,6 @@ fun GameHome(navController: NavHostController, selectedOption: String) {
         "Skwer",
         "Zoo",
         "Wesołe miasteczko",
-        "Strefa rozrywki",
         "Planetarium",
         "Restauracja",
         "Kawiarnia",
@@ -73,6 +73,7 @@ fun GameHome(navController: NavHostController, selectedOption: String) {
         Text(text = selectedOption)
 
         val selectedNumber = selectedOption.toInt()
+
         val numList = (1..selectedNumber).toMutableList()
 
 
@@ -108,6 +109,11 @@ fun GameHome(navController: NavHostController, selectedOption: String) {
                     )
                 }
             }
+        }
+        Button(onClick = {
+            navController.navigate("startScreen")
+        }) {
+            Text(text = "End the Game")
         }
     }
 }

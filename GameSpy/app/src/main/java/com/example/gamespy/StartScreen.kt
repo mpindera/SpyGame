@@ -1,6 +1,7 @@
 package com.example.gamespy
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -48,6 +50,8 @@ fun StartScreen(
             mutableStateOf(false)
         }
 
+        val context = LocalContext.current
+
         Box(modifier = Modifier.padding(16.dp)) {
             Column {
                 Button(
@@ -58,7 +62,7 @@ fun StartScreen(
                     Text(
                         color = Color.Black,
                         fontSize = 20.sp,
-                        text = selectedOption.takeUnless { it.isEmpty() } ?: "Select number")
+                        text = selectedOption.takeUnless { it.isEmpty() } ?: "Select")
                 }
 
                 DropdownMenu(
@@ -81,8 +85,12 @@ fun StartScreen(
         }
         Button(
             onClick = {
-                Log.d("num", selectedOption)
-                navController.navigate("gameScreen")
+                if (selectedOption != "") {
+                    navController.navigate("gameScreen")
+                } else {
+                    navController.navigate("startScreen")
+                    Toast.makeText(context, "Choose number.", Toast.LENGTH_SHORT).show()
+                }
             },
             modifier = Modifier
                 .padding(top = 30.dp),
