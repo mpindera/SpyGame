@@ -58,9 +58,14 @@ fun NavigationAppHost(navController: NavHostController) {
                 selectedOption = selectedOptionState.value
             )
         }
-        composable(Destination.OptionScreenDestination.route){
+        composable(Destination.OptionScreenDestination.route) {
             OptionScreen(
                 navController = navController
+            )
+        }
+        composable(Destination.ListScreenDestination.route) {
+            ListScreen(
+
             )
         }
 

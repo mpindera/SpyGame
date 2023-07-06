@@ -1,10 +1,15 @@
 package com.example.gamespy.data.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "headline_table")
+@Entity(tableName = "info_table")
 data class Info(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val name: String
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "info_id")
+    val infoID: Int = 0,
+    @ColumnInfo(name = "nameInfo")
+    val nameInfo: String,
+
 )

@@ -7,6 +7,7 @@ import androidx.room.Query
 import com.example.gamespy.data.entity.DaoInfo
 import com.example.gamespy.data.entity.Info
 import com.example.gamespy.data.entity.Place
+import com.example.gamespy.data.entity.relation.InfoWithPlaces
 
 class InfoPlaceRepository(private val daoInfo: DaoInfo) {
 
@@ -33,4 +34,8 @@ class InfoPlaceRepository(private val daoInfo: DaoInfo) {
     suspend fun deleteAllInfo() = daoInfo.deleteAllInfo()
 
     suspend fun deleteAllPlaces() = daoInfo.deleteAllPlaces()
+
+    fun getAllInfoWithPlaces() = daoInfo.getAllInfoWithPlaces()
+
+
 }
