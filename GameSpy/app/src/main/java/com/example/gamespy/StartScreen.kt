@@ -102,5 +102,20 @@ fun StartScreen(
                 color = Color.Black
             )
         }
+        Button(
+            onClick = {
+                navController.navigate("optionScreen")
+
+            },
+            modifier = Modifier
+                .padding(top = 30.dp),
+            colors = ButtonDefaults.buttonColors(Color(0xFF867D7D))
+        ) {
+            Text(
+                text = "Option",
+                fontSize = 20.sp,
+                color = Color.Black
+            )
+        }
     }
 }

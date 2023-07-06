@@ -70,13 +70,10 @@ fun GameHome(navController: NavHostController, selectedOption: String) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = selectedOption)
 
         val selectedNumber = selectedOption.toInt()
 
         val numList = (1..selectedNumber).toMutableList()
-
-
 
         numList.shuffle()
         val rows = numList.chunked(3)
@@ -84,8 +81,6 @@ fun GameHome(navController: NavHostController, selectedOption: String) {
         val randomNum = (1..40).random()
 
         val randomSpyNum = numList.random()
-
-        Log.d("numSpy", randomSpyNum.toString())
 
         val context = LocalContext.current
 
@@ -110,7 +105,9 @@ fun GameHome(navController: NavHostController, selectedOption: String) {
                 }
             }
         }
+
         Button(onClick = {
+            navController.popBackStack()
             navController.navigate("startScreen")
         }) {
             Text(text = "End the Game")
