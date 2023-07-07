@@ -1,6 +1,8 @@
 package com.example.gamespy
 
+import android.content.Context
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,6 +12,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Button
@@ -27,9 +31,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
@@ -64,8 +71,7 @@ fun OptionScreen(navController: NavController) {
     }
 
 }
-
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun AddingElements(viewModel: ViewModel, listOfInfo: MutableSet<String>) {
 
@@ -83,6 +89,7 @@ fun AddingElements(viewModel: ViewModel, listOfInfo: MutableSet<String>) {
         mutableStateOf(false)
     }
 
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     OutlinedTextField(
         value = textInfo,
@@ -125,7 +132,6 @@ fun AddingElements(viewModel: ViewModel, listOfInfo: MutableSet<String>) {
     )
 
     val infoTextField = Info(nameInfo = textInfo)
-
     val placesTextField = Place(infoID = infoTextField.infoID, namePlaces = textPlaces)
     Row(
         modifier = Modifier.padding(top = 15.dp)
@@ -134,6 +140,9 @@ fun AddingElements(viewModel: ViewModel, listOfInfo: MutableSet<String>) {
             if (infoTextField.nameInfo != "" && placesTextField.namePlaces != "") {
                 viewModel.insertInfo(infoTextField)
                 viewModel.insertPlace(placesTextField)
+                Toast.makeText(context, "$textPlaces ,has been added to $textInfo.", Toast.LENGTH_SHORT).show()
+                textPlaces = ""
+                keyboardController?.hide()
             } else {
                 Toast.makeText(context, "Fill Info.", Toast.LENGTH_SHORT).show()
             }
@@ -150,9 +159,8 @@ fun AddingElements(viewModel: ViewModel, listOfInfo: MutableSet<String>) {
             Text(text = "Delete all")
         }
     }
-
-
 }
+
 
 
 

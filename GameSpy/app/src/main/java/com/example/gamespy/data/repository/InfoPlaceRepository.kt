@@ -23,6 +23,7 @@ class InfoPlaceRepository(private val daoInfo: DaoInfo) {
         daoInfo.deletePlace(place)
     }
 
+
     fun getAllInfoPlace(): LiveData<List<Place>> = daoInfo.getAllInfoPlace()
 
     fun getAllInfo(): LiveData<List<Info>> = daoInfo.getAllInfo()
@@ -32,7 +33,6 @@ class InfoPlaceRepository(private val daoInfo: DaoInfo) {
     suspend fun deleteAllPlaces() = daoInfo.deleteAllPlaces()
 
     fun getAllInfoWithPlaces() = daoInfo.getAllInfoWithPlaces()
-
 
 
 }

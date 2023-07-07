@@ -40,4 +40,5 @@ interface DaoInfo {
     @Query("SELECT * FROM info_table")
     fun getAllInfoWithPlaces(): LiveData<List<InfoWithPlaces>>
 
+
 }

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">GameSpy</string>
-    <string name="textInfo">Group Places</string>
+    <string name="textInfo">Groups:</string>
+    <string name="textPlaces">Group Places:</string>
 </resources>
