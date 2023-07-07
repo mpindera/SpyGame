@@ -117,5 +117,20 @@ fun StartScreen(
                 color = Color.Black
             )
         }
+        Button(
+            onClick = {
+                navController.navigate("listScreen")
+
+            },
+            modifier = Modifier
+                .padding(top = 30.dp),
+            colors = ButtonDefaults.buttonColors(Color(0xFF867D7D))
+        ) {
+            Text(
+                text = "List",
+                fontSize = 20.sp,
+                color = Color.Black
+            )
+        }
     }
 }

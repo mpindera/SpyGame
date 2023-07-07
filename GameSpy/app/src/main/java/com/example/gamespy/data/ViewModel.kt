@@ -46,7 +46,7 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun deletePlace(place: Place) {
+    fun deletePlace(place: List<Place>) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deletePlace(place)
         }
@@ -75,4 +75,6 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
             repository.deleteAllPlaces()
         }
     }
+
+
 }

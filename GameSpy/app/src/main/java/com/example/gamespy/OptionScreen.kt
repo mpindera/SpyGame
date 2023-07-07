@@ -1,8 +1,11 @@
 package com.example.gamespy
 
 import android.util.Log
+import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -10,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -37,11 +41,10 @@ import com.example.gamespy.data.entity.Place
 @Composable
 fun OptionScreen(navController: NavController) {
 
-    val context = LocalContext.current
     val viewModelInfoPlace: ViewModel = viewModel()
-
     val items = viewModelInfoPlace.readAlldata.observeAsState(listOf()).value
-    val listOfInfo = mutableSetOf<String>()
+    val listOfInfo: MutableSet<String> = mutableSetOf()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -49,11 +52,11 @@ fun OptionScreen(navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         items.forEach { infoPlace ->
             listOfInfo.add(infoPlace.info.nameInfo)
-            Text(text = "Group: ${infoPlace.info.nameInfo} |  ${infoPlace.placeNames}")
-
         }
+
         Text(text = "Adding elements to game")
         Spacer(modifier = Modifier.padding(bottom = 15.dp))
         AddingElements(viewModelInfoPlace, listOfInfo)
@@ -66,6 +69,7 @@ fun OptionScreen(navController: NavController) {
 @Composable
 fun AddingElements(viewModel: ViewModel, listOfInfo: MutableSet<String>) {
 
+    val context = LocalContext.current
 
     var textInfo by remember {
         mutableStateOf("")
@@ -123,15 +127,30 @@ fun AddingElements(viewModel: ViewModel, listOfInfo: MutableSet<String>) {
     val infoTextField = Info(nameInfo = textInfo)
 
     val placesTextField = Place(infoID = infoTextField.infoID, namePlaces = textPlaces)
+    Row(
+        modifier = Modifier.padding(top = 15.dp)
+    ) {
+        Button(colors = ButtonDefaults.buttonColors(Color(0xFEDFAC57)), onClick = {
+            if (infoTextField.nameInfo != "" && placesTextField.namePlaces != "") {
+                viewModel.insertInfo(infoTextField)
+                viewModel.insertPlace(placesTextField)
+            } else {
+                Toast.makeText(context, "Fill Info.", Toast.LENGTH_SHORT).show()
+            }
+        }) {
+            Text(text = "Add")
+        }
 
-    Button(onClick = {
-        viewModel.insertInfo(infoTextField)
-        viewModel.insertPlace(placesTextField)
-        /*viewModel.deleteAllInfo()
-        viewModel.deleteAllPlaces()*/
-    }) {
-        Text(text = "Add")
+        Spacer(modifier = Modifier.padding(15.dp))
+
+        Button(colors = ButtonDefaults.buttonColors(Color(0xFEDFAC57)), onClick = {
+            viewModel.deleteAllInfo()
+            viewModel.deleteAllPlaces()
+        }) {
+            Text(text = "Delete all")
+        }
     }
+
 
 }
 

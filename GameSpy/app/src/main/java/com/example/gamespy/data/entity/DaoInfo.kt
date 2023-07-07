@@ -21,7 +21,7 @@ interface DaoInfo {
     suspend fun deleteInfo(info: Info)
 
     @Delete
-    suspend fun deletePlace(place: Place)
+    suspend fun deletePlace(place: List<Place>)
 
     @Query("SELECT * FROM places_table")
     fun getAllInfoPlace(): LiveData<List<Place>>
