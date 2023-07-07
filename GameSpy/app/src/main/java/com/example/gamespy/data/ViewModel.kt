@@ -11,6 +11,7 @@ import com.example.gamespy.data.entity.relation.InfoWithPlaces
 import com.example.gamespy.data.repository.InfoPlaceRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -18,20 +19,24 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: InfoPlaceRepository
 
     init {
-        val listPlaceDB = AppDatabase.getInstance(application).daoInfo()
-        repository = InfoPlaceRepository(listPlaceDB)
+        val daoInfo = AppDatabase.getInstance(application).daoInfo()
+        repository = InfoPlaceRepository(daoInfo)
         readAlldata = repository.getAllInfoWithPlaces()
     }
 
     fun insertInfo(info: Info) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.insertInfo(info)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                repository.insertInfo(info)
+            }
         }
     }
 
     fun insertPlace(place: Place) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.insertPlace(place)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                repository.insertPlace(place)
+            }
         }
     }
 
@@ -70,8 +75,4 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
             repository.deleteAllPlaces()
         }
     }
-
-
-
-
 }

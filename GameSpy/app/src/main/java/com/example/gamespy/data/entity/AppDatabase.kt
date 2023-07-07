@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.gamespy.data.entity.relation.InfoWithPlaces
 
-@Database(entities = [Info::class, Place::class], version = 2)
+@Database(entities = [Info::class, Place::class], version = 12)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun daoInfo(): DaoInfo

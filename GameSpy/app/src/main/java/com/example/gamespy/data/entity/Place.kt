@@ -9,8 +9,13 @@ import androidx.room.PrimaryKey
 data class Place(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "places_id")
-    val placesID: Int = 0,
+    var placesID: Int = 0,
+
+    @ColumnInfo(name = "places")
     val namePlaces: String,
+
     @ColumnInfo(name = "info_id")
-    val infoID: Int
+    var infoID: Int = 0
 )
+
+

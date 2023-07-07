@@ -1,6 +1,7 @@
 package com.example.gamespy
 
 import android.app.Application
+import android.util.Log
 import android.widget.Space
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -50,10 +51,9 @@ fun OptionScreen(navController: NavController) {
     ) {
         items.forEach { infoPlace ->
 
-            Text(text = "Group: ${infoPlace.info.nameInfo} |  ${infoPlace.places}")
-            
-        }
+            Text(text = "Group: ${infoPlace.info.nameInfo} |  ${infoPlace.placeNames}")
 
+        }
         Text(text = "Adding elements to game")
         Spacer(modifier = Modifier.padding(bottom = 15.dp))
         AddingElements(viewModelInfoPlace)
@@ -74,13 +74,6 @@ fun AddingElements(viewModel: ViewModel) {
         mutableStateOf("")
     }
 
-
-    /*val infoTextField = Info(nameInfo = "Place1")
-
-    val infoId = infoTextField.infoID
-
-    val placesTextField = Place(infoID = infoId, namePlaces = "Dom")*/
-
     OutlinedTextField(
         value = textInfo,
         onValueChange = { textInfo = it },
@@ -94,18 +87,27 @@ fun AddingElements(viewModel: ViewModel) {
         onValueChange = { textPlaces = it },
         label = { Text(text = "Places") }
     )
+
     val infoTextField = Info(nameInfo = textInfo)
 
-    val infoId = infoTextField.infoID
 
-    /*val placesTextField = Place(infoID = infoId, namePlaces = textPlaces)*/
-    val placesTextField = Place(infoID = infoId, namePlaces = "Dom")
+    val placesTextField = Place(infoID = infoTextField.infoID, namePlaces = textPlaces)
+
+
+
+
+
+
+
+    Log.d("mlm", "INFO ${infoTextField.infoID}")
+
+
 
     Button(onClick = {
         viewModel.insertInfo(infoTextField)
         viewModel.insertPlace(placesTextField)
-        /* viewModel.deleteAllInfo()
-         viewModel.deleteAllPlaces()*/
+        /*viewModel.deleteAllInfo()
+        viewModel.deleteAllPlaces()*/
     }) {
 
         Text(text = "Add")

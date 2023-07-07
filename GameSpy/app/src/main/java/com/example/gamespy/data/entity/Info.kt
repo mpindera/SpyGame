@@ -8,8 +8,7 @@ import androidx.room.PrimaryKey
 data class Info(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "info_id")
-    val infoID: Int = 0,
+    var infoID: Int = 0,
     @ColumnInfo(name = "nameInfo")
-    val nameInfo: String,
-
+    val nameInfo: String
 )

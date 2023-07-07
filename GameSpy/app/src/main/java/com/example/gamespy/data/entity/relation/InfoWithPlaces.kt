@@ -9,8 +9,10 @@ data class InfoWithPlaces(
     @Embedded val info: Info,
     @Relation(
         parentColumn = "info_id",
-        entityColumn = "info_id"
+        entityColumn = "places_id"
     )
     val places: List<Place>
-
-)
+) {
+    val placeNames: List<String>
+        get() = places.map { it.namePlaces }
+}
