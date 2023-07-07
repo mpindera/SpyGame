@@ -1,19 +1,21 @@
 package com.example.gamespy
 
-import android.app.Application
 import android.util.Log
-import android.widget.Space
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -22,18 +24,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.lifecycle.viewmodel.viewModelFactory
 
 import androidx.navigation.NavController
 import com.example.gamespy.data.ViewModel
-import com.example.gamespy.data.entity.AppDatabase
 import com.example.gamespy.data.entity.Info
 import com.example.gamespy.data.entity.Place
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OptionScreen(navController: NavController) {
 
@@ -41,7 +41,7 @@ fun OptionScreen(navController: NavController) {
     val viewModelInfoPlace: ViewModel = viewModel()
 
     val items = viewModelInfoPlace.readAlldata.observeAsState(listOf()).value
-
+    val listOfInfo = mutableSetOf<String>()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -50,13 +50,13 @@ fun OptionScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         items.forEach { infoPlace ->
-
+            listOfInfo.add(infoPlace.info.nameInfo)
             Text(text = "Group: ${infoPlace.info.nameInfo} |  ${infoPlace.placeNames}")
 
         }
         Text(text = "Adding elements to game")
         Spacer(modifier = Modifier.padding(bottom = 15.dp))
-        AddingElements(viewModelInfoPlace)
+        AddingElements(viewModelInfoPlace, listOfInfo)
         Spacer(modifier = Modifier.padding(bottom = 15.dp))
     }
 
@@ -64,7 +64,8 @@ fun OptionScreen(navController: NavController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddingElements(viewModel: ViewModel) {
+fun AddingElements(viewModel: ViewModel, listOfInfo: MutableSet<String>) {
+
 
     var textInfo by remember {
         mutableStateOf("")
@@ -74,10 +75,41 @@ fun AddingElements(viewModel: ViewModel) {
         mutableStateOf("")
     }
 
+    var isDropdownOpen by remember {
+        mutableStateOf(false)
+    }
+
+
     OutlinedTextField(
         value = textInfo,
         onValueChange = { textInfo = it },
-        label = { Text(text = "Info") }
+        label = { Text(text = "Info") },
+        leadingIcon = {
+            IconButton(onClick = {
+                isDropdownOpen = true
+            }) {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowDown,
+                    contentDescription = "Add Icon",
+                    tint = Color.Black
+                )
+                DropdownMenu(
+                    expanded = isDropdownOpen,
+                    onDismissRequest = { isDropdownOpen = false },
+                    modifier = Modifier.width(100.dp)
+                ) {
+                    listOfInfo.forEach { selectedInfo ->
+                        androidx.compose.material3.DropdownMenuItem(
+                            text = { Text(text = selectedInfo) },
+                            onClick = {
+                                textInfo = selectedInfo
+                                isDropdownOpen = false
+                            }
+                        )
+                    }
+                }
+            }
+        }
     )
 
     Spacer(modifier = Modifier.padding(bottom = 15.dp))
@@ -90,18 +122,7 @@ fun AddingElements(viewModel: ViewModel) {
 
     val infoTextField = Info(nameInfo = textInfo)
 
-
     val placesTextField = Place(infoID = infoTextField.infoID, namePlaces = textPlaces)
-
-
-
-
-
-
-
-    Log.d("mlm", "INFO ${infoTextField.infoID}")
-
-
 
     Button(onClick = {
         viewModel.insertInfo(infoTextField)
@@ -109,9 +130,7 @@ fun AddingElements(viewModel: ViewModel) {
         /*viewModel.deleteAllInfo()
         viewModel.deleteAllPlaces()*/
     }) {
-
         Text(text = "Add")
-
     }
 
 }
